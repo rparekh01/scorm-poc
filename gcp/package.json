@@ -1,0 +1,13 @@
+{
+  "name": "scorm-unzip",
+  "version": "1.0.0",
+  "main": "index.js",
+  "engines": { "node": ">=20" },
+  "dependencies": {
+    "@google-cloud/functions-framework": "^3.4.0",
+    "@google-cloud/storage": "^7.12.0",
+    "fast-xml-parser": "^4.5.0",
+    "mime-types": "^2.1.35",
+    "yauzl": "^3.2.0"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "main": ".open-next/worker.js",
+  "name": "scorm-poc",
+  "compatibility_date": "2025-03-01",
+  "compatibility_flags": ["nodejs_compat", "global_fetch_strictly_public"],
+  "assets": { "directory": ".open-next/assets", "binding": "ASSETS" },
+  "services": [{ "binding": "WORKER_SELF_REFERENCE", "service": "scorm-poc" }],
+  // Non-secret settings. The two HMAC values are secrets: set them with
+  //   npx wrangler secret put GCS_HMAC_ACCESS_KEY
+  //   npx wrangler secret put GCS_HMAC_SECRET
+  "vars": {
+    "STORAGE_ADAPTER": "gcs",
+    "GCS_BUCKET": "scorm-extracted-rajp1",
+  },
+}

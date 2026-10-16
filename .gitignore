@@ -1,0 +1,8 @@
+node_modules
+.next
+.env.local
+local-data
+.open-next
+.dev.vars
+test-course
+.DS_Store

@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Course</title>
+<style>
+  body { font-family: system-ui, sans-serif; margin: 0; color: #1b1b1b; background: #fff; }
+  header { padding: 12px 20px; background: #1f3a5f; color: #fff; }
+  header h1 { margin: 0; font-size: 18px; }
+  #banner { background: #fde8e8; color: #7a1c1c; padding: 8px 20px; }
+  #layout { display: flex; min-height: 440px; }
+  #steps { list-style: none; margin: 0; padding: 12px; width: 220px; background: #f3f5f8; border-right: 1px solid #dde2ea; }
+  #steps li { padding: 8px 10px; margin-bottom: 4px; border-radius: 6px; font-size: 14px; color: #8a93a3; }
+  #steps li.open { color: #1b1b1b; cursor: pointer; }
+  #steps li.done::before { content: "\2713 "; color: #1b7f3b; }
+  #steps li.current { background: #dbe7f7; font-weight: 600; }
+  main { flex: 1; padding: 20px 28px; }
+  main img, main video { max-width: 100%; border-radius: 6px; background: #000; }
+  button { padding: 8px 16px; font-size: 15px; margin-right: 8px; cursor: pointer; }
+  button:disabled { cursor: not-allowed; }
+  .q { margin: 16px 0; }
+  .muted { color: #666; font-size: 13px; }
+  .result { padding: 10px 14px; border-radius: 6px; margin: 12px 0; }
+  .pass { background: #e3f6e8; } .fail { background: #fde8e8; }
+</style>
+</head>
+<body>
+<header><h1 id="title"></h1></header>
+<div id="banner" hidden></div>
+<div id="layout">
+  <ul id="steps"></ul>
+  <main id="content"></main>
+</div>
+<script src="scripts/course.js"></script>
+<script src="scripts/player.js"></script>
+</body>
+</html>
