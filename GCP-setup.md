@@ -126,43 +126,6 @@ The course ID is the zip's file name without `.zip`, and it must equal the folde
 
 ---
 
-## Moving from the old two-bucket setup
-
-Only needed if you built the earlier version (zips bucket plus the `scorm-unzip` Cloud Function). Run step 1 first, and set `ZIPS="scorm-zips-$SUFFIX"`.
-
-Delete the function (this also removes its trigger):
-
-```bash
-gcloud functions delete scorm-unzip --gen2 --region="$REGION"
-```
-
-Delete the zips bucket. **This permanently deletes the bucket and every zip in it**, so keep your zips on your computer first:
-
-```bash
-gcloud storage rm --recursive "gs://$ZIPS"
-```
-
-Empty the extracted bucket but keep the bucket. **This permanently deletes everything in it**, so only do it before you upload fresh courses:
-
-```bash
-gcloud storage rm "gs://$BUCKET/**"
-```
-
-Optional: remove the roles that only the function needed. Check first that nothing else in the project uses them:
-
-```bash
-PROJECT_NUMBER=$(gcloud projects describe "$PROJECT" --format='value(projectNumber)')
-gcloud projects remove-iam-policy-binding "$PROJECT" \
-  --member="serviceAccount:service-$PROJECT_NUMBER@gs-project-accounts.iam.gserviceaccount.com" \
-  --role="roles/pubsub.publisher"
-for ROLE in roles/eventarc.eventReceiver roles/run.invoker roles/storage.objectAdmin roles/cloudbuild.builds.builder; do
-  gcloud projects remove-iam-policy-binding "$PROJECT" \
-    --member="serviceAccount:$PROJECT_NUMBER-compute@developer.gserviceaccount.com" --role="$ROLE" >/dev/null
-done
-```
-
----
-
 ## Quick troubleshooting
 
 | Symptom                                               | Cause / fix                                                                                             |
@@ -173,7 +136,3 @@ done
 | `Unrecognized scheme ""` on an upload                 | `$BUCKET` or the local folder variable is empty. Check with `echo`.                                     |
 | App shows "This course is not available."             | Check bucket name and key in `.env.local`, and that the course ID equals the folder name in the bucket. |
 | Permission error when the app reads                   | The `scorm-reader` account needs `roles/storage.objectViewer` on this bucket (step 4).                  |
-
-## Cost note
-
-Google Cloud's Always Free tier includes 5 GB of standard storage per month in certain US regions (`us-east1`, `us-west1`, `us-central1`). Check Google's current pricing page. With one bucket and no function, the only ongoing costs are the storage itself and data sent out of the bucket when learners open courses.
